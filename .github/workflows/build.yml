@@ -87,6 +87,8 @@ jobs:
 
       - name: Build backend executable
         run: cd backend && python build_backend.py
+        env:
+          PYTHONIOENCODING: utf-8
 
       - name: Build Electron app (Windows)
         run: npm run build && npx electron-builder --win --publish never

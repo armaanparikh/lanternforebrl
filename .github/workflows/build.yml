@@ -28,7 +28,9 @@ jobs:
         run: npm ci
 
       - name: Install Python dependencies
-        run: pip3 install -r backend/requirements.txt pyinstaller
+        run: |
+          pip3 install --upgrade pip setuptools
+          pip3 install -r backend/requirements.txt pyinstaller
 
       - name: Download ffmpeg
         run: |
@@ -68,7 +70,9 @@ jobs:
         run: npm ci
 
       - name: Install Python dependencies
-        run: pip install -r backend/requirements.txt pyinstaller
+        run: |
+          pip install --upgrade pip setuptools
+          pip install -r backend/requirements.txt pyinstaller
 
       - name: Download ffmpeg
         shell: powershell

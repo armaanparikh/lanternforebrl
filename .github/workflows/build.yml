@@ -39,6 +39,9 @@ jobs:
           chmod +x scripts/download-ffmpeg.sh
           ./scripts/download-ffmpeg.sh mac
 
+      - name: Download Whisper base model
+        run: python3 -c "import whisper; whisper.load_model('base', download_root='./whisper-models')"
+
       - name: Build backend executable
         run: cd backend && python3 build_backend.py
 
@@ -75,6 +78,11 @@ jobs:
           python -m pip install setuptools numpy torch --quiet
           python -m pip install --no-build-isolation openai-whisper==20231117
           python -m pip install flask==3.0.0 flask-cors==4.0.0 pandas==2.1.4 numpy==1.26.2 werkzeug==3.0.1 networkx==3.2.1 pyinstaller
+
+      - name: Download Whisper base model
+        run: python -c "import whisper; whisper.load_model('base', download_root='./whisper-models')"
+        env:
+          PYTHONIOENCODING: utf-8
 
       - name: Download ffmpeg
         shell: powershell

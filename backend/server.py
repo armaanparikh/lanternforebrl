@@ -19,6 +19,7 @@ import whisper
 import pandas as pd
 import numpy as np
 import os
+import sys
 import re
 import tempfile
 from pathlib import Path
@@ -44,13 +45,36 @@ print("Loading Whisper model...")
 whisper_model = None
 current_model_name = None
 
+def get_whisper_download_root():
+    """Get the path to bundled Whisper models, if available."""
+    # When running as a PyInstaller bundle inside Electron
+    if getattr(sys, 'frozen', False):
+        # PyInstaller exe is in resources/backend/, models are in resources/whisper-models/
+        base = Path(sys.executable).parent
+        bundled = base / 'whisper-models'
+        if bundled.exists():
+            return str(bundled)
+        # Also check one level up (resources/)
+        bundled = base.parent / 'whisper-models'
+        if bundled.exists():
+            return str(bundled)
+    # Check relative to server.py (for dev or direct python run)
+    local = Path(__file__).parent.parent / 'whisper-models'
+    if local.exists():
+        return str(local)
+    return None
+
 def get_model(model_name='base'):
     """Load or return cached Whisper model"""
     global whisper_model, current_model_name
 
     if whisper_model is None or current_model_name != model_name:
-        print(f"Loading Whisper model: {model_name}...")
-        whisper_model = whisper.load_model(model_name)
+        download_root = get_whisper_download_root()
+        if download_root:
+            print(f"Loading Whisper model: {model_name} from {download_root}")
+        else:
+            print(f"Loading Whisper model: {model_name} (will download if needed)")
+        whisper_model = whisper.load_model(model_name, download_root=download_root)
         current_model_name = model_name
         print(f"Model {model_name} loaded successfully")
 

@@ -29,6 +29,7 @@ backend-dist/
 
 # Bundled binaries (downloaded at build time)
 ffmpeg-bin/
+whisper-models/
 
 # IDE
 .vscode/*

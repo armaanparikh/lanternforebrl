@@ -25,6 +25,10 @@ extraResources:
     to: ffmpeg
     filter:
       - "**/*"
+  - from: whisper-models/
+    to: whisper-models
+    filter:
+      - "**/*"
 
 win:
   target:

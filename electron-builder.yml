@@ -1,0 +1,83 @@
+appId: com.ebrl.lantern
+productName: LANTERN
+copyright: Copyright © 2025 Education and Brain Sciences Research Lab
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+
+extraResources:
+  - from: backend/
+    to: backend
+    filter:
+      - "server.py"
+      - "requirements.txt"
+  - from: backend-dist/
+    to: backend
+    filter:
+      - "**/*"
+  - from: ffmpeg-bin/
+    to: ffmpeg
+    filter:
+      - "**/*"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  # icon: public/favicon.ico  # Removed - favicon too small, using default Electron icon
+  artifactName: LANTERN-Setup-${version}.${ext}
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  # Icons removed - favicon too small for Windows requirements
+  # installerIcon: public/favicon.ico
+  # uninstallerIcon: public/favicon.ico
+  # installerHeaderIcon: public/favicon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: LANTERN
+  # license: LICENSE.txt  # No license file exists yet
+
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  category: public.app-category.productivity
+  artifactName: LANTERN-${version}-${arch}.${ext}
+  darkModeSupport: true
+  hardenedRuntime: false
+  gatekeeperAssess: false
+
+dmg:
+  title: LANTERN
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+  icon: public/favicon.png
+  category: Office
+
+publish:
+  provider: github
+  owner: armaanparikh
+  repo: lanternebrl
+

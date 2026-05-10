@@ -70,12 +70,11 @@ jobs:
         run: npm ci
 
       - name: Install Python dependencies
-        shell: bash
         run: |
-          pip install --upgrade pip setuptools wheel
-          pip install setuptools numpy torch --quiet
-          pip install --no-build-isolation openai-whisper==20231117
-          pip install flask==3.0.0 flask-cors==4.0.0 pandas==2.1.4 numpy==1.26.2 werkzeug==3.0.1 networkx==3.2.1 pyinstaller
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install setuptools numpy torch --quiet
+          python -m pip install --no-build-isolation openai-whisper==20231117
+          python -m pip install flask==3.0.0 flask-cors==4.0.0 pandas==2.1.4 numpy==1.26.2 werkzeug==3.0.1 networkx==3.2.1 pyinstaller
 
       - name: Download ffmpeg
         shell: powershell

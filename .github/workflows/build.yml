@@ -29,7 +29,9 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip3 install --upgrade pip setuptools
+          pip3 install --upgrade pip setuptools wheel
+          pip3 install setuptools numpy torch --quiet
+          pip3 install --no-build-isolation openai-whisper==20231117
           pip3 install -r backend/requirements.txt pyinstaller
 
       - name: Download ffmpeg
@@ -71,7 +73,9 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install --upgrade pip setuptools
+          pip install --upgrade pip setuptools wheel
+          pip install setuptools numpy torch --quiet
+          pip install --no-build-isolation openai-whisper==20231117
           pip install -r backend/requirements.txt pyinstaller
 
       - name: Download ffmpeg
